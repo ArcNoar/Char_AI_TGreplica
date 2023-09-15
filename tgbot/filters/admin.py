@@ -15,5 +15,6 @@ class AdminFilter(BoundFilter):
         if self.is_admin is None:
             return False
         config: Config = obj.bot.get('config')
+        print('Be happy admin-san. Its Filter Stage.')
         return (obj.from_user.id in config.tg_bot.admin_ids) == self.is_admin
 

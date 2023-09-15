@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from typing import List
+
 from environs import Env
 
 
@@ -14,12 +16,14 @@ class DbConfig:
 @dataclass
 class TgBot:
     token: str
-    admin_ids: list[int]
+    admin_ids: List[int]
     use_redis: bool
 
 
 @dataclass
 class Miscellaneous:
+    openAI_Token: str
+    amplitude_Token: str
     other_params: str = None
 
 
@@ -46,5 +50,8 @@ def load_config(path: str = None):
             user=env.str('DB_USER'),
             database=env.str('DB_NAME')
         ),
-        misc=Miscellaneous()
+        misc=Miscellaneous(
+            openAI_Token=env.str('OAI_TOKEN'),
+            amplitude_Token=env.str('AMPLITUDE_TOKEN')
+        )
     )

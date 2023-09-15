@@ -8,15 +8,17 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from tgbot.config import load_config
 from tgbot.filters.admin import AdminFilter
 from tgbot.handlers.admin import register_admin
-from tgbot.handlers.echo import register_echo
+from tgbot.handlers.character import register_character
+from tgbot.handlers.neutral import register_neutral
 from tgbot.handlers.user import register_user
-from tgbot.middlewares.environment import EnvironmentMiddleware
+
+from tgbot.middlewares.EntryMW import Entry_Middleware
 
 logger = logging.getLogger(__name__)
 
 
-def register_all_middlewares(dp, config):
-    dp.setup_middleware(EnvironmentMiddleware(config=config))
+def register_all_middlewares(dp):
+    dp.setup_middleware(Entry_Middleware())
 
 
 def register_all_filters(dp):
@@ -24,10 +26,10 @@ def register_all_filters(dp):
 
 
 def register_all_handlers(dp):
-    register_admin(dp)
+    #register_admin(dp)
     register_user(dp)
-
-    register_echo(dp)
+    register_character(dp)
+    register_neutral(dp)
 
 
 async def main():
@@ -44,7 +46,7 @@ async def main():
 
     bot['config'] = config
 
-    register_all_middlewares(dp, config)
+    register_all_middlewares(dp)
     register_all_filters(dp)
     register_all_handlers(dp)
 
